@@ -2,24 +2,8 @@ FROM ubuntu:latest
 
 # System packages
 RUN apt-get update && apt-get install -yq curl wget jq vim
-
-# Install miniconda
-ENV CONDA_DIR /opt/conda
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
-     /bin/bash ~/miniconda.sh -b -p /opt/conda
-
-# Put conda in path so we can use conda activate
-ENV PATH=$CONDA_DIR/bin:$PATH
-
-RUN conda install -c conda-forge jupyterlab
-
-# Define environment variables
-ENV PATH="/app/miniconda3/bin:${PATH}"
-
-# eventually move this up
 RUN apt-get install -yq git sudo
 
-## add required elements from binder https://github.com/binder-examples/minimal-dockerfile/blob/master/Dockerfile
 # create user with a home directory
 ARG NB_USER
 ARG NB_UID
@@ -33,6 +17,18 @@ RUN adduser --disabled-password \
 WORKDIR ${HOME}
 USER ${USER}
 
+# Install miniconda
+ENV CONDA_DIR ${HOME}/conda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
+     /bin/bash ~/miniconda.sh -b -p ${HOME}/conda
+
+# Put conda in path so we can use conda activate
+ENV PATH=$CONDA_DIR/bin:$PATH
+
+RUN conda install -c conda-forge jupyterlab
+
+## add required elements from binder https://github.com/binder-examples/minimal-dockerfile/blob/master/Dockerfile
+
 ENV J_INSTALLATION_FOLDER="/home/$USER/j902/"
 ENV J_BIN_FOLDER="/home/$USER/J902/bin"
 
@@ -41,13 +37,11 @@ RUN wget http://www.jsoftware.com/download/j902/install/j902_linux64.tar.gz && \
 
 RUN git clone https://github.com/martin-saurer/jkernel.git
 WORKDIR ${HOME}/jkernel
-USER root
+
 RUN python setup.py install
-WORKDIR ${HOME}
-USER ${USER}
 
 # Available ports outside this container
-# EXPOSE 8000
+EXPOSE 8000
 
 # docker run -p 127.0.0.1:8000:8000 martinsaurer/jlang:jkernel
 # ENTRYPOINT jupyter notebook --ip=0.0.0.0 --port=8000 --no-browser --allow-root
