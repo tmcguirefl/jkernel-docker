@@ -1,3 +1,2 @@
 #!/bin/sh
-/app/miniconda3/bin/python /app/miniconda3/bin/jupyter-lab --ip=0.0.0.0 --port=8000 --no-browser --allow-root
-
+# this should be run from binder or jupyter notebook --ip=0.0.0.0 --port=8000 --no-browser --allow-root
