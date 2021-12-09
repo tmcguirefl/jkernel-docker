@@ -43,7 +43,7 @@ RUN git clone https://github.com/martin-saurer/jkernel.git
 WORKDIR ${HOME}/jkernel
 USER root
 RUN python setup.py install
-
+WORKDIR ${HOME}
 USER ${USER}
 
 # Available ports outside this container
