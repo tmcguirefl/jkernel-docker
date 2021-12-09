@@ -1,5 +1,7 @@
 FROM ubuntu:latest
 
+# docker build . --build-arg NB_USER=joebo --build-arg NB_UID=1000
+
 # System packages
 RUN apt-get update && apt-get install -yq curl wget jq vim
 RUN apt-get install -yq git sudo
