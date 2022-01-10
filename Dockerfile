@@ -31,11 +31,11 @@ RUN conda install -c conda-forge jupyterlab
 
 ## add required elements from binder https://github.com/binder-examples/minimal-dockerfile/blob/master/Dockerfile
 
-ENV J_INSTALLATION_FOLDER="/home/$USER/j902/"
-ENV J_BIN_FOLDER="/home/$USER/j902/bin"
+ENV J_INSTALLATION_FOLDER="/home/$USER/j903/"
+ENV J_BIN_FOLDER="/home/$USER/j903/bin"
 
-RUN wget http://www.jsoftware.com/download/j902/install/j902_linux64.tar.gz && \
-    tar -zxvf j902_linux64.tar.gz
+RUN wget http://www.jsoftware.com/download/j903/install/j903_linux64.tar.gz && \
+    tar -zxvf j903_linux64.tar.gz
 
 RUN git clone https://github.com/martin-saurer/jkernel.git
 WORKDIR ${HOME}/jkernel
