@@ -36,6 +36,10 @@ ENV J_BIN_FOLDER="/home/$USER/j903/bin"
 
 RUN wget http://www.jsoftware.com/download/j903/install/j903_linux64.tar.gz && \
     tar -zxvf j903_linux64.tar.gz
+RUN echo "load 'pacman'">getjlib.sh && \
+    echo "'install' jpkg '*'">>getjlib.sh && \
+    echo "exit 0">>getjlib.sh
+RUN ${J_BIN_FOLDER}/jconsole getjlib.sh
 
 RUN git clone https://github.com/martin-saurer/jkernel.git
 WORKDIR ${HOME}/jkernel
